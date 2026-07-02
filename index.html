@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quote Generator</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --terminal: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --green: #3fb950;
+      --muted: #8b949e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Consolas, Menlo, monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .terminal {
+      width: 100%;
+      max-width: 640px;
+      background: var(--terminal);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green { background: #28c840; }
+
+    .terminal-title {
+      margin: 0 auto;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .terminal-body {
+      padding: 32px 24px;
+    }
+
+    .prompt-line {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    .prompt-line .user { color: var(--green); }
+    .prompt-line .path { color: #58a6ff; }
+
+    #quote {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    #author {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    #new-quote {
+      background: none;
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-family: inherit;
+      font-size: 15px;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <main class="terminal">
+    <div class="terminal-bar">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="terminal-title">quote-generator — bash</span>
+    </div>
+
+    <div class="terminal-body">
+      <p class="prompt-line">
+        <span class="user">karen@portfolio</span>:<span class="path">~</span>$ ./quotes.sh
+      </p>
+      <p id="quote"></p>
+      <p id="author"></p>
+
+      <button id="new-quote" type="button">$ generate</button>
+    </div>
+  </main>
+
+  <script>
+    const quotes = [
+      { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
+      { text: "Programs must be written for people to read, and only incidentally for machines to execute.", author: "Harold Abelson" },
+      { text: "First, solve the problem. Then, write the code.", author: "John Johnson" },
+      { text: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
+      { text: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.", author: "Martin Fowler" }
+    ];
+
+    const quoteEl = document.getElementById("quote");
+    const authorEl = document.getElementById("author");
+
+    function randomQuote() {
+      const index = Math.floor(Math.random() * quotes.length);
+      return quotes[index];
+    }
+
+    function showQuote() {
+      const quote = randomQuote();
+      quoteEl.textContent = `"${quote.text}"`;
+      authorEl.textContent = `— ${quote.author}`;
+    }
+
+    document.getElementById("new-quote").onclick = showQuote;
+    showQuote();
+  </script>
+</body>
+</html>
