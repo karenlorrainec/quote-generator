@@ -73,12 +73,27 @@
       font-size: 18px;
       line-height: 1.6;
       margin-bottom: 12px;
+      min-height: 3.2em;
+    }
+
+    #quote::after {
+      content: "▊";
+      color: var(--green);
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
     }
 
     #author {
       color: var(--muted);
       font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.4s;
     }
+
+    #author.visible { opacity: 1; }
 
     #new-quote {
       background: none;
@@ -124,20 +139,34 @@
 
     const quoteEl = document.getElementById("quote");
     const authorEl = document.getElementById("author");
+    let timer = null;
 
     function randomQuote() {
       const index = Math.floor(Math.random() * quotes.length);
       return quotes[index];
     }
 
-    function showQuote() {
-      const quote = randomQuote();
-      quoteEl.textContent = `"${quote.text}"`;
-      authorEl.textContent = `— ${quote.author}`;
+    function typeOut(quote) {
+      clearTimeout(timer);
+      quoteEl.textContent = "";
+      authorEl.classList.remove("visible");
+
+      const text = '"' + quote.text + '"';
+      let pos = 0;
+
+      (function next() {
+        if (pos < text.length) {
+          quoteEl.textContent += text[pos++];
+          timer = setTimeout(next, 25);
+        } else {
+          authorEl.textContent = "— " + quote.author;
+          authorEl.classList.add("visible");
+        }
+      })();
     }
 
-    document.getElementById("new-quote").onclick = showQuote;
-    showQuote();
+    document.getElementById("new-quote").onclick = () => typeOut(randomQuote());
+    typeOut(randomQuote());
   </script>
 </body>
 </html>
