@@ -140,10 +140,15 @@
     const quoteEl = document.getElementById("quote");
     const authorEl = document.getElementById("author");
     let timer = null;
+    let lastIndex = -1;
 
     function randomQuote() {
-      const index = Math.floor(Math.random() * quotes.length);
-      return quotes[index];
+      let i;
+      do {
+        i = Math.floor(Math.random() * quotes.length);
+      } while (i === lastIndex);
+      lastIndex = i;
+      return quotes[i];
     }
 
     function typeOut(quote) {
