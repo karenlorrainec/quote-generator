@@ -34,6 +34,7 @@
       align-items: center;
       justify-content: center;
       padding: 24px;
+      transition: background 0.25s;
     }
 
     .terminal {
@@ -80,12 +81,15 @@
 
     .terminal-body {
       padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
     }
 
     .prompt-line {
       color: var(--muted);
       font-size: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     .prompt-line .user { color: var(--green); }
@@ -127,6 +131,14 @@
       border-radius: 6px;
       cursor: pointer;
       margin-top: 24px;
+    }
+
+    #new-quote:hover { background: rgba(63, 185, 80, 0.12); }
+    #new-quote:active { transform: scale(0.97); }
+
+    @media (prefers-reduced-motion: reduce) {
+      #quote::after { animation: none; }
+      body { transition: none; }
     }
   </style>
 </head>
