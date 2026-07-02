@@ -3,7 +3,7 @@
 Random programming quote generator with a terminal look. Click the button
 and the quote gets "typed" out like console output.
 
-Live: https://YOUR-USERNAME.github.io/quote-generator/
+Live: https://karenlorrainec.github.io/quote-generator/
 
 Plain HTML/CSS/JS, no dependencies. Quotes are just an array of objects,
 each click picks a random index (skipping the last one so it doesn't
